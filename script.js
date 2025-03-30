@@ -277,50 +277,27 @@ document.addEventListener('DOMContentLoaded', function () {
         const jsonData = JSON.stringify(data);
         // Telegram.WebApp.sendData(jsonData);
         //window.parent.postMessage(jsonData, '*');
-        window.Telegram.WebApp.expand();
-        try {        
-            // Отправляем данные через postMessage
-            window.parent.postMessage(jsonData, '*');
-        } catch (error) {
-            console.error('Ошибка при отправке данных:', error);
-            alert('Произошла ошибка при отправке данных.');
-        }
-    }
-    
-    // Обработка данных, полученных через postMessage
-    window.addEventListener('message', (event) => {
-        // Проверяем источник сообщения для безопасности
-        if (event.origin !== 'https://sam5213.github.io') return;
-    
-        // Получаем отправленные данные
-        const receivedData = event.data;
-    
-        sendPostRequest(receivedData);
-    });
+        try {
+                // Отправляем данные через Fetch API
+                const response = await fetch('https://thirsty-kingfisher-32.deno.dev/api/quiz', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonData
+                });
 
-    
-    function sendPostRequest(jsonData) {
-        var xhr = new XMLHttpRequest(); // Создаем новый объект XMLHttpRequest
-        var url = "https://famous-jungle-mandarin.glitch.me/"; // URL, на который будет отправлен запрос
-    
-        xhr.open("POST", url, true); // Инициализируем POST-запрос
-    
-        // Устанавливаем заголовок для передачи JSON-данных
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) { // Проверяем, завершен ли запрос
-                if (xhr.status === 200) { // Проверяем, успешен ли ответ
-                    console.log("Response:", xhr.responseText); // Выводим ответ в консоль
-                } else {
-                    console.error("Error:", xhr.status); // Выводим ошибку, если запрос не успешен
+                if (!response.ok) {
+                    throw new Error(`Ошибка HTTP! Статус: ${response.status}`);
                 }
+                const result = await response.json();
+                console.log('Ответ сервера:', result);
+            } catch (error) {
+                console.error('Ошибка при отправке данных:', error);
+                Telegram.WebApp.showAlert('⚠️ Произошла ошибка при отправке данных.');
             }
-        };
+        }
     
-        xhr.send(jsonData);
-    }
-
     // Форматирование даты
     function formatDate(date) {
         const day = date.getDate().toString().padStart(2, '0');
