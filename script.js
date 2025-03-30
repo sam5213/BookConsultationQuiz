@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const bookButton = document.getElementById('book-button');
     const bookedDateElement = document.getElementById('booked-date');
     const bookedTimeElement = document.getElementById('booked-time');
-    const backToHomeBtn = document.getElementById('back-to-home');
 
     const tg = window.Telegram.WebApp;
 
@@ -255,6 +254,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // Устанавливаем информацию о бронировании
             bookedDateElement.textContent = formatDate(selectedDate);
             bookedTimeElement.textContent = selectedTimeSlot;
+
+            sendDataToTelegram();
             
         } catch (error) {
             alert('Ошибка бронирования: ' + error.message);
@@ -416,13 +417,7 @@ document.addEventListener('DOMContentLoaded', function () {
         resultPage.classList.add('hidden');
         calendarPage.classList.remove('hidden');
         renderCalendar();
-    });
-
-    backToHomeBtn.addEventListener('click', () => {
-        sendDataToTelegram();
-    });
-
-    
+    });    
 
     bookButton.addEventListener('click', bookSlot);
     prevMonthBtn.addEventListener('click', () => updateMonth(-1));
