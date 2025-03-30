@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     // Элементы интерфейса
     const welcomePage = document.getElementById('welcome-page');
     const surveyPage = document.getElementById('survey-page');
@@ -86,9 +86,16 @@ document.addEventListener('DOMContentLoaded', function () {
     //     }
     // ];
 
-    const questions = await fetchQuestionsFromGist(); // Загружаем вопросы из Gist
-    if (questions.length === 0) {
-        console.error('Не удалось загрузить вопросы.');
+    // Загрузка вопросов из Gist
+    let questions = [];
+    try {
+        questions = await fetchQuestionsFromGist(); // Загружаем вопросы из Gist
+        if (questions.length === 0) {
+            console.error('Не удалось загрузить вопросы.');
+            return;
+        }
+    } catch (error) {
+        console.error('Ошибка при загрузке вопросов:', error);
         return;
     }
 
