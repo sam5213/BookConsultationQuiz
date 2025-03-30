@@ -99,11 +99,18 @@ document.addEventListener('DOMContentLoaded', async function () {
         return;
     }
 
+    // Загрузка результатов из Gist
+    results = await fetchResultsFromGist(); // Загружаем результаты из Gist
+    if (Object.keys(results).length === 0) {
+        console.error('Не удалось загрузить результаты.');
+        return;
+    }
+
     // Загрузка вопросов из GitHub Gist
     async function fetchQuestionsFromGist() {
         try {
             const gistId = 'c564bff72d54005febc2218a5f2b892c'; // ID Gist
-            const fileName = 'gistfile1.txt'; // Название файла с вопросами
+            const fileName = 'questions.json'; // Название файла с вопросами
             const response = await fetch(`https://api.github.com/gists/${gistId}`);
             const data = await response.json();
             const fileContent = data.files[fileName].content;
@@ -125,13 +132,46 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // Результаты на основе типов ответов
-    const results = {
-        a: "Вам подойдет одиночная сессия за 7000 рублей или очищение от негативных энергий. Запишитесь прямо сейчас!",
-        b: "Вам подойдет квантовое сопровождение (3, 6 или 9 сессий). Это поможет глубже проработать ваши запросы.",
-        c: "Рекомендуем трансформационные программы или энергосеансы лунного рейки.",
-        d: "Послушайте подкасты или посмотрите прямые эфиры, а затем запишитесь на консультацию, чтобы определиться с подходящей услугой."
-    };
+    // const results = {
+    //     a: "Вам подойдет одиночная сессия за 7000 рублей или очищение от негативных энергий. Запишитесь прямо сейчас!",
+    //     b: "Вам подойдет квантовое сопровождение (3, 6 или 9 сессий). Это поможет глубже проработать ваши запросы.",
+    //     c: "Рекомендуем трансформационные программы или энергосеансы лунного рейки.",
+    //     d: "Послушайте подкасты или посмотрите прямые эфиры, а затем запишитесь на консультацию, чтобы определиться с подходящей услугой."
+    // };
 
+    async function fetchResultsFromGist() {
+        try {
+            const gistId = '87c3e2331d542324548b60abb7e54560'; // ID Gist
+            const fileName = 'results.json'; // Название файла с результатами
+    
+            // Запрос к GitHub API для получения содержимого Gist
+            const response = await fetch(`https://api.github.com/gists/${gistId}`);
+            if (!response.ok) {
+                throw new Error(`Ошибка загрузки Gist: ${response.status} ${response.statusText}`);
+            }
+    
+            const data = await response.json();
+            const file = data.files?.[fileName];
+    
+            if (!file) {
+                throw new Error(`Файл "${fileName}" не найден в Gist.`);
+            }
+    
+            let decodedContent;
+            if (isBase64(file.content)) {
+                decodedContent = Buffer.from(file.content, 'base64').toString('utf-8');
+            } else {
+                decodedContent = file.content; // Используем содержимое как есть
+            }
+    
+            // Парсим JSON-данные
+            return JSON.parse(decodedContent);
+        } catch (error) {
+            console.error('Ошибка загрузки результатов:', error);
+            return {};
+        }
+    }
+    
     // Состояние приложения
     let currentQuestionIndex = 0;
     let answers = [];
