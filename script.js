@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     async function fetchQuestionsFromGist() {
         try {
             const gistId = 'c564bff72d54005febc2218a5f2b892c'; // ID Gist
-            const fileName = 'questions.json'; // Название файла с вопросами
+            const fileName = 'gistfile1.txt'; // Название файла с вопросами
             const response = await fetch(`https://api.github.com/gists/${gistId}`);
             const data = await response.json();
             const fileContent = data.files[fileName].content;
