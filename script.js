@@ -24,67 +24,98 @@ document.addEventListener('DOMContentLoaded', function () {
     const tg = window.Telegram.WebApp;
 
     // Новые вопросы опроса с иконками
-    const questions = [
-        {
-            id: 1,
-            question: "Что вас больше всего интересует?",
-            options: [
-                { text: "Работа с женскими энергиями и гармонизация отношений с собой и партнером", icon: "fas fa-venus", type: "a" },
-                { text: "Очищение от негативных энергий (сглаз, самозглаз, программы)", icon: "fas fa-broom", type: "b" },
-                { text: "Квантовая сессия для решения конкретной проблемы здесь и сейчас", icon: "fas fa-atom", type: "c" },
-                { text: "Таро-расклады и советы по жизненным ситуациям", icon: "fas fa-star", type: "d" }
-            ]
-        },
-        {
-            id: 2,
-            question: "С какими запросами вы обращаетесь?",
-            options: [
-                { text: "Самоценность и самоосознание", icon: "fas fa-heart", type: "a" },
-                { text: "Внутренняя опора и поиск своего истинного \"Я\"", icon: "fas fa-user-circle", type: "b" },
-                { text: "Баланс мужских и женских энергий в паре", icon: "fas fa-yin-yang", type: "c" },
-                { text: "Личностная трансформация и самореализация", icon: "fas fa-rocket", type: "d" }
-            ]
-        },
-        {
-            id: 3,
-            question: "Как долго вы готовы работать над собой?",
-            options: [
-                { text: "Одна сессия или чистка достаточно", icon: "far fa-clock", type: "a" },
-                { text: "Несколько сессий для глубокой проработки", icon: "fas fa-calendar-alt", type: "b" },
-                { text: "Долгосрочное квантовое сопровождение (3-9 сессий)", icon: "fas fa-calendar-check", type: "c" },
-                { text: "Постоянная работа над собой через лунный рейки", icon: "fas fa-moon", type: "d" }
-            ]
-        },
-        {
-            id: 4,
-            question: "Вы хотите решить проблему здесь и сейчас или понять причины ее возникновения?",
-            options: [
-                { text: "Здесь и сейчас", icon: "fas fa-bolt", type: "a" },
-                { text: "Глубокая проработка причин", icon: "fas fa-search", type: "b" },
-                { text: "Оба варианта важны", icon: "fas fa-balance-scale", type: "c" }
-            ]
-        },
-        {
-            id: 5,
-            question: "Какую энергию вы хотели бы восстановить или развить?",
-            options: [
-                { text: "Женские энергии", icon: "fas fa-female", type: "a" },
-                { text: "Энергетическую структуру (чакры, меридианы, тонкие тела)", icon: "fas fa-spa", type: "b" },
-                { text: "Усиление собственного потенциала через квантовые методы", icon: "fas fa-atom", type: "c" },
-                { text: "Не знаю точно, но хочу разобраться", icon: "fas fa-question-circle", type: "d" }
-            ]
-        },
-        {
-            id: 6,
-            question: "Каким форматом работы вы предпочитаете?",
-            options: [
-                { text: "Индивидуальная дистанционная сессия", icon: "fas fa-user", type: "a" },
-                { text: "Групповая программа трансформации", icon: "fas fa-users", type: "b" },
-                { text: "Энергосеансы лунного рейки", icon: "fas fa-hand-sparkles", type: "c" },
-                { text: "Подкасты и прямые эфиры для самостоятельного погружения", icon: "fas fa-headphones", type: "d" }
-            ]
+    // const questions = [
+    //     {
+    //         id: 1,
+    //         question: "Что вас больше всего интересует?",
+    //         options: [
+    //             { text: "Работа с женскими энергиями и гармонизация отношений с собой и партнером", icon: "fas fa-venus", type: "a" },
+    //             { text: "Очищение от негативных энергий (сглаз, самозглаз, программы)", icon: "fas fa-broom", type: "b" },
+    //             { text: "Квантовая сессия для решения конкретной проблемы здесь и сейчас", icon: "fas fa-atom", type: "c" },
+    //             { text: "Таро-расклады и советы по жизненным ситуациям", icon: "fas fa-star", type: "d" }
+    //         ]
+    //     },
+    //     {
+    //         id: 2,
+    //         question: "С какими запросами вы обращаетесь?",
+    //         options: [
+    //             { text: "Самоценность и самоосознание", icon: "fas fa-heart", type: "a" },
+    //             { text: "Внутренняя опора и поиск своего истинного \"Я\"", icon: "fas fa-user-circle", type: "b" },
+    //             { text: "Баланс мужских и женских энергий в паре", icon: "fas fa-yin-yang", type: "c" },
+    //             { text: "Личностная трансформация и самореализация", icon: "fas fa-rocket", type: "d" }
+    //         ]
+    //     },
+    //     {
+    //         id: 3,
+    //         question: "Как долго вы готовы работать над собой?",
+    //         options: [
+    //             { text: "Одна сессия или чистка достаточно", icon: "far fa-clock", type: "a" },
+    //             { text: "Несколько сессий для глубокой проработки", icon: "fas fa-calendar-alt", type: "b" },
+    //             { text: "Долгосрочное квантовое сопровождение (3-9 сессий)", icon: "fas fa-calendar-check", type: "c" },
+    //             { text: "Постоянная работа над собой через лунный рейки", icon: "fas fa-moon", type: "d" }
+    //         ]
+    //     },
+    //     {
+    //         id: 4,
+    //         question: "Вы хотите решить проблему здесь и сейчас или понять причины ее возникновения?",
+    //         options: [
+    //             { text: "Здесь и сейчас", icon: "fas fa-bolt", type: "a" },
+    //             { text: "Глубокая проработка причин", icon: "fas fa-search", type: "b" },
+    //             { text: "Оба варианта важны", icon: "fas fa-balance-scale", type: "c" }
+    //         ]
+    //     },
+    //     {
+    //         id: 5,
+    //         question: "Какую энергию вы хотели бы восстановить или развить?",
+    //         options: [
+    //             { text: "Женские энергии", icon: "fas fa-female", type: "a" },
+    //             { text: "Энергетическую структуру (чакры, меридианы, тонкие тела)", icon: "fas fa-spa", type: "b" },
+    //             { text: "Усиление собственного потенциала через квантовые методы", icon: "fas fa-atom", type: "c" },
+    //             { text: "Не знаю точно, но хочу разобраться", icon: "fas fa-question-circle", type: "d" }
+    //         ]
+    //     },
+    //     {
+    //         id: 6,
+    //         question: "Каким форматом работы вы предпочитаете?",
+    //         options: [
+    //             { text: "Индивидуальная дистанционная сессия", icon: "fas fa-user", type: "a" },
+    //             { text: "Групповая программа трансформации", icon: "fas fa-users", type: "b" },
+    //             { text: "Энергосеансы лунного рейки", icon: "fas fa-hand-sparkles", type: "c" },
+    //             { text: "Подкасты и прямые эфиры для самостоятельного погружения", icon: "fas fa-headphones", type: "d" }
+    //         ]
+    //     }
+    // ];
+
+    const questions = await fetchQuestionsFromGist(); // Загружаем вопросы из Gist
+    if (questions.length === 0) {
+        console.error('Не удалось загрузить вопросы.');
+        return;
+    }
+
+    // Загрузка вопросов из GitHub Gist
+    async function fetchQuestionsFromGist() {
+        try {
+            const gistId = 'c564bff72d54005febc2218a5f2b892c'; // ID Gist
+            const fileName = 'questions.json'; // Название файла с вопросами
+            const response = await fetch(`https://api.github.com/gists/${gistId}`);
+            const data = await response.json();
+            const fileContent = data.files[fileName].content;
+    
+            // Проверяем, является ли содержимое Base64
+            let decodedContent;
+            if (isBase64(fileContent)) {
+                decodedContent = Buffer.from(fileContent, 'base64').toString('utf-8');
+            } else {
+                decodedContent = fileContent; // Используем содержимое как есть
+            }
+    
+            // Парсим JSON-данные
+            return JSON.parse(decodedContent);
+        } catch (error) {
+            console.error('Ошибка загрузки вопросов:', error);
+            return [];
         }
-    ];
+    }
 
     // Результаты на основе типов ответов
     const results = {
