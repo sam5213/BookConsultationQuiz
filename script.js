@@ -333,6 +333,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function sendDataToTelegram() {
+        // Формируем username
+        const username = Telegram.WebApp.initDataUnsafe.user?.username 
+            || `Пользователь #${Telegram.WebApp.initDataUnsafe.user?.id}
+            || `${Telegram.WebApp.initDataUnsafe.user?.first_name} ${Telegram.WebApp.initDataUnsafe.user?.last_name || ''}`.trim() 
+            || 'Неизвестный пользователь';
+        
         const data = {
             answers: answers.map(answer => ({
                 questionId: answer.questionId,
@@ -342,7 +348,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             result: getMostFrequentAnswerType(),
             date: selectedDate ? formatDate(selectedDate) : null,
             time: selectedTimeSlot,
-            username: Telegram.WebApp.initDataUnsafe.user?.username || 'Неизвестный пользователь'
+            username: username
         };
     
         // Преобразуем данные в строку JSON
