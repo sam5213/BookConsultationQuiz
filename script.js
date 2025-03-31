@@ -131,14 +131,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    // Результаты на основе типов ответов
-    // const results = {
-    //     a: "Вам подойдет одиночная сессия за 7000 рублей или очищение от негативных энергий. Запишитесь прямо сейчас!",
-    //     b: "Вам подойдет квантовое сопровождение (3, 6 или 9 сессий). Это поможет глубже проработать ваши запросы.",
-    //     c: "Рекомендуем трансформационные программы или энергосеансы лунного рейки.",
-    //     d: "Послушайте подкасты или посмотрите прямые эфиры, а затем запишитесь на консультацию, чтобы определиться с подходящей услугой."
-    // };
-
     async function fetchResultsFromGist() {
         try {
             const gistId = '87c3e2331d542324548b60abb7e54560'; // ID Gist
@@ -349,7 +341,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             })),
             result: getMostFrequentAnswerType(),
             date: selectedDate ? formatDate(selectedDate) : null,
-            time: selectedTimeSlot
+            time: selectedTimeSlot,
+            username: Telegram.WebApp.initDataUnsafe.user?.username || 'Неизвестный пользователь'
         };
     
         // Преобразуем данные в строку JSON
