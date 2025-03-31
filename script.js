@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const bookButton = document.getElementById('book-button');
     const bookedDateElement = document.getElementById('booked-date');
     const bookedTimeElement = document.getElementById('booked-time');
+    const questionCountElement = document.getElementById('question-count');
     const tg = window.Telegram.WebApp;
 
     // Загрузка вопросов из Gist
@@ -30,9 +31,21 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.error('Не удалось загрузить вопросы.');
             return;
         }
+        questionCountElement.textContent = `${questions.length} вопрос${getPluralSuffix(questions.length)}`;
     } catch (error) {
         console.error('Ошибка при загрузке вопросов:', error);
         return;
+    }
+
+    // Функция для получения правильного окончания слова "вопрос"
+    function getPluralSuffix(count) {
+        if (count % 10 === 1 && count % 100 !== 11) {
+            return ''; // "вопрос"
+        } else if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
+            return 'а'; // "вопроса"
+        } else {
+            return 'ов'; // "вопросов"
+        }
     }
 
     let results = {};
