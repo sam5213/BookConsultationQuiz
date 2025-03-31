@@ -334,6 +334,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     async function sendDataToTelegram() {
         // Формируем username
+        alert('Содержимое username: ' + Telegram.WebApp.initDataUnsafe.user?.username);
         const username = Telegram.WebApp.initDataUnsafe.user?.username 
             || `Пользователь #${Telegram.WebApp.initDataUnsafe.user?.id}`
             || `${Telegram.WebApp.initDataUnsafe.user?.first_name} ${Telegram.WebApp.initDataUnsafe.user?.last_name || ''}`.trim() 
