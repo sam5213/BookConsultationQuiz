@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         return;
     }
 
+    let results = {};
     // Загрузка результатов из Gist
     results = await fetchResultsFromGist(); // Загружаем результаты из Gist
     if (Object.keys(results).length === 0) {
@@ -322,24 +323,30 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Определение наиболее частого типа ответа
     function getMostFrequentAnswerType() {
-        const typeCounts = { a: 0, b: 0, c: 0, d: 0 };
-        
+        // Создаем динамический объект typeCounts на основе загруженных результатов
+        const typeCounts = {};
+        for (const type in results) {
+            typeCounts[type] = 0; // Инициализируем счетчики нулями
+        }
+    
+        // Подсчитываем частоту типов ответов
         answers.forEach(answer => {
-            if (answer.answerType) {
+            if (answer.answerType && typeCounts.hasOwnProperty(answer.answerType)) {
                 typeCounts[answer.answerType]++;
             }
         });
-        
+    
+        // Находим наиболее часто встречающийся тип
         let maxCount = 0;
-        let maxType = 'a';
-        
+        let maxType = null;
+    
         for (const type in typeCounts) {
             if (typeCounts[type] > maxCount) {
                 maxCount = typeCounts[type];
                 maxType = type;
             }
         }
-        
+    
         return maxType;
     }
 
